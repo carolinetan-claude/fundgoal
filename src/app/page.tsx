@@ -137,7 +137,7 @@ export default async function Home() {
             color: "#FFFFFF",
           }}
         >
-          PICK A MATCH <span style={{ color: "#F0B90B" }}>&</span> BACK A TEAM
+          PICK A MATCH
         </h2>
       </div>
       <div

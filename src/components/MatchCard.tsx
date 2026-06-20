@@ -335,7 +335,7 @@ export function MatchCard({ match }: { match: Match }) {
               textAlign: "center",
             }}
           >
-            {isResolved ? "VIEW RESULTS" : "FUND THIS MATCH →"}
+            {isResolved ? "VIEW RESULTS" : "PICK THIS MATCH TO FUND →"}
           </div>
         </div>
       </div>
