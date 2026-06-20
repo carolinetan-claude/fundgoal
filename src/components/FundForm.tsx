@@ -36,8 +36,6 @@ export function FundForm({ matchId, teamChoice, teamName, projectName, onSuccess
       const lamports = Math.floor(solAmount * LAMPORTS_PER_SOL)
       const [poolPDA] = await getMatchPoolPDA(matchId)
 
-      // For hackathon: send SOL directly to the pool PDA (simulated)
-      // In production this would call the Anchor program deposit instruction
       const tx = new Transaction().add(
         SystemProgram.transfer({
           fromPubkey: publicKey,
@@ -46,13 +44,34 @@ export function FundForm({ matchId, teamChoice, teamName, projectName, onSuccess
         })
       )
 
-      const sig = await sendTransaction(tx, connection)
-      await connection.confirmTransaction(sig, "confirmed")
+      let sig: string | null = null
+      let retries = 3
+      while (retries > 0) {
+        try {
+          sig = await sendTransaction(tx, connection)
+          break
+        } catch (retryErr: unknown) {
+          retries--
+          const msg = retryErr instanceof Error ? retryErr.message : ""
+          if (msg.includes("429") && retries > 0) {
+            await new Promise(r => setTimeout(r, 2000))
+            continue
+          }
+          throw retryErr
+        }
+      }
 
-      onSuccess(sig)
+      if (sig) {
+        await connection.confirmTransaction(sig, "confirmed")
+        onSuccess(sig)
+      }
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Transaction failed"
-      setError(message)
+      if (message.includes("429")) {
+        setError("Solana network is busy. Please try again in a few seconds.")
+      } else {
+        setError(message)
+      }
     } finally {
       setLoading(false)
     }
