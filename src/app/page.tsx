@@ -42,9 +42,9 @@ export default async function Home() {
             color: "#FFFFFF",
           }}
         >
-          THE WORLD CUP IS HAPPENING.
+          EVERY GOAL BEGINS WITH A DREAM.
           <br />
-          <span style={{ color: "#F0B90B" }}>FUND A DREAM.</span>
+          <span style={{ color: "#F0B90B" }}>A DREAM YOU HAVE THE POWER TO FUND.</span>
         </h1>
         <p
           style={{
