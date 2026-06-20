@@ -20,7 +20,7 @@ export function MatchDetail({ match, charityUrl }: { match: Match; charityUrl: s
   const totalSol = match.totalSol || 0
 
   return (
-    <div style={{ paddingTop: "32px", paddingBottom: "64px", maxWidth: "800px", margin: "0 auto" }}>
+    <div style={{ paddingTop: "32px", paddingBottom: "64px", maxWidth: selectedTeam ? "1100px" : "800px", margin: "0 auto", transition: "max-width 0.3s ease" }}>
       {/* Back link */}
       <a href="/" style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.85rem", textDecoration: "none", marginBottom: "20px", display: "inline-block" }}>
         ← Back to matches
@@ -90,7 +90,7 @@ export function MatchDetail({ match, charityUrl }: { match: Match; charityUrl: s
         </div>
       )}
 
-      {/* =================== Dream selection — the main event =================== */}
+      {/* =================== Dream selection + checkout =================== */}
       {!isResolved && !funded && (
         <>
           <div style={{ textAlign: "center", marginBottom: "24px" }}>
@@ -102,129 +102,142 @@ export function MatchDetail({ match, charityUrl }: { match: Match; charityUrl: s
             </p>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px", marginBottom: "32px" }}>
-            {[
-              { key: "A" as const, team: match.teamA },
-              { key: "B" as const, team: match.teamB },
-            ].map(({ key, team }) => {
-              const isSelected = selectedTeam === key
-              return (
-                <div
-                  key={key}
-                  onClick={() => setSelectedTeam(key)}
-                  style={{
-                    background: isSelected ? "#1a1a0a" : "#0a0a0a",
-                    border: isSelected ? "3px solid #F0B90B" : "3px solid rgba(255,255,255,0.08)",
-                    borderRadius: "20px",
-                    cursor: "pointer",
-                    transition: "all 0.2s ease",
-                    boxShadow: isSelected ? "0 0 30px rgba(240,185,11,0.2)" : "0 4px 24px rgba(0,0,0,0.3)",
-                    overflow: "hidden",
-                  }}
-                >
-                  {/* Dream project — hero section */}
-                  <div style={{ padding: "24px 20px 16px", textAlign: "center" }}>
-                    <div style={{ fontSize: "3rem", marginBottom: "6px", lineHeight: 1 }}>{team.flag}</div>
-                    <div style={{ fontSize: "0.6rem", color: "#F0B90B", textTransform: "uppercase", letterSpacing: "0.12em", fontWeight: 700, marginBottom: "12px" }}>
-                      Back {team.name}
-                    </div>
-
-                    {/* The dream */}
-                    <div
-                      style={{
-                        background: isSelected ? "rgba(240,185,11,0.08)" : "#141414",
-                        borderRadius: "12px",
-                        padding: "16px",
-                        textAlign: "left",
-                        border: isSelected ? "1px solid rgba(240,185,11,0.2)" : "1px solid rgba(255,255,255,0.04)",
-                      }}
-                    >
-                      <div style={{ fontSize: "0.55rem", color: "#F0B90B", textTransform: "uppercase", letterSpacing: "0.12em", fontWeight: 700, marginBottom: "8px" }}>
-                        🌟 The dream you&apos;ll fund
-                      </div>
-                      <div style={{ fontSize: "1rem", fontWeight: 800, color: "#FFFFFF", marginBottom: "8px", lineHeight: 1.3 }}>
-                        {team.project.name}
-                      </div>
-                      <div style={{ fontSize: "0.78rem", color: "#aaa", lineHeight: 1.6 }}>
-                        {team.project.description}
-                      </div>
-                      <div style={{ fontSize: "0.68rem", color: "#666", marginTop: "10px" }}>
-                        📍 {team.project.country}
+          <div style={{ display: "flex", gap: "24px", alignItems: "flex-start" }}>
+            {/* LEFT — Dream cards */}
+            <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "16px" }}>
+              {[
+                { key: "A" as const, team: match.teamA },
+                { key: "B" as const, team: match.teamB },
+              ].map(({ key, team }) => {
+                const isSelected = selectedTeam === key
+                const p = team.project
+                return (
+                  <div
+                    key={key}
+                    onClick={() => setSelectedTeam(key)}
+                    style={{
+                      background: "#0a0a0a",
+                      border: isSelected ? "2px solid #F0B90B" : "2px solid rgba(255,255,255,0.08)",
+                      borderRadius: "16px",
+                      cursor: "pointer",
+                      transition: "all 0.2s ease",
+                      boxShadow: isSelected ? "0 0 30px rgba(240,185,11,0.15)" : "0 4px 24px rgba(0,0,0,0.3)",
+                      padding: "20px",
+                      display: "flex",
+                      flexDirection: "column" as const,
+                      gap: "12px",
+                    }}
+                  >
+                    {/* Header: flag + team + project name */}
+                    <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                      <span style={{ fontSize: "2rem" }}>{team.flag}</span>
+                      <div>
+                        <div style={{ fontSize: "0.55rem", color: "#888", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 600 }}>
+                          If {team.name} wins
+                        </div>
+                        <div style={{ fontSize: "1rem", fontWeight: 800, color: "#FFFFFF", lineHeight: 1.3 }}>
+                          {p.name}
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  {/* CTA */}
-                  <div style={{ padding: "0 20px 20px" }}>
+                    {/* Subsections */}
+                    <div style={{ display: "grid", gridTemplateColumns: isSelected ? "1fr" : "1fr 1fr 1fr", gap: "8px" }}>
+                      <div style={{ background: "#141414", borderRadius: "8px", padding: "10px" }}>
+                        <div style={{ fontSize: "0.5rem", color: "#F0B90B", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700, marginBottom: "4px" }}>
+                          👥 Who is this for?
+                        </div>
+                        <div style={{ fontSize: "0.72rem", color: "#ccc", lineHeight: 1.4 }}>{p.whoIsThisFor}</div>
+                      </div>
+                      <div style={{ background: "#141414", borderRadius: "8px", padding: "10px" }}>
+                        <div style={{ fontSize: "0.5rem", color: "#F0B90B", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700, marginBottom: "4px" }}>
+                          💰 What funds are used for
+                        </div>
+                        <div style={{ fontSize: "0.72rem", color: "#ccc", lineHeight: 1.4 }}>{p.whatFundsUsedFor}</div>
+                      </div>
+                      <div style={{ background: "#141414", borderRadius: "8px", padding: "10px" }}>
+                        <div style={{ fontSize: "0.5rem", color: "#F0B90B", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700, marginBottom: "4px" }}>
+                          ✨ Why is this unique?
+                        </div>
+                        <div style={{ fontSize: "0.72rem", color: "#ccc", lineHeight: 1.4 }}>{p.whyUnique}</div>
+                      </div>
+                    </div>
+
+                    {/* CTA */}
                     <div
                       style={{
-                        background: isSelected ? "#F0B90B" : "rgba(255,255,255,0.06)",
-                        color: isSelected ? "#0a0a0a" : "#888",
+                        background: "#F0B90B",
+                        color: "#0a0a0a",
                         fontWeight: 800,
-                        fontSize: "0.8rem",
+                        fontSize: "0.82rem",
                         textTransform: "uppercase",
                         letterSpacing: "0.05em",
                         padding: "14px",
                         borderRadius: "10px",
                         textAlign: "center",
-                        transition: "all 0.2s ease",
+                        opacity: isSelected ? 1 : 0.85,
                       }}
                     >
-                      {isSelected ? "✓ YOU'RE BACKING THIS DREAM" : `BACK ${team.name.toUpperCase()} →`}
+                      {isSelected ? "✓ YOU'RE BACKING THIS TEAM" : "BACK THIS TEAM →"}
                     </div>
                   </div>
+                )
+              })}
+            </div>
+
+            {/* RIGHT — Checkout panel (sticky) */}
+            {selectedTeam && (
+              <div style={{ width: "340px", flexShrink: 0, position: "sticky" as const, top: "80px" }}>
+                <div style={{ background: "#0a0a0a", borderRadius: "14px", padding: "24px", boxShadow: "0 4px 24px rgba(0,0,0,0.3)", border: "2px solid #F0B90B" }}>
+                  <div style={{ fontSize: "0.6rem", color: "#F0B90B", textTransform: "uppercase", letterSpacing: "0.12em", fontWeight: 700, marginBottom: "16px", textAlign: "center" }}>
+                    Checkout
+                  </div>
+                  <div style={{ textAlign: "center", marginBottom: "16px" }}>
+                    <div style={{ fontSize: "1.5rem", marginBottom: "4px" }}>
+                      {selectedTeam === "A" ? match.teamA.flag : match.teamB.flag}
+                    </div>
+                    <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#FFFFFF" }}>
+                      {selectedTeam === "A" ? match.teamA.project.name : match.teamB.project.name}
+                    </div>
+                  </div>
+                  {!publicKey ? (
+                    <div style={{ textAlign: "center" }}>
+                      <div style={{ fontSize: "0.82rem", color: "#888", marginBottom: "16px" }}>
+                        Connect your wallet to pledge SOL
+                      </div>
+                      <WalletMultiButton
+                        style={{
+                          background: "#F0B90B",
+                          color: "#0a0a0a",
+                          fontWeight: 800,
+                          fontSize: "0.85rem",
+                          textTransform: "uppercase",
+                          borderRadius: "8px",
+                          padding: "14px 32px",
+                          border: "none",
+                          cursor: "pointer",
+                          width: "100%",
+                          justifyContent: "center",
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    <FundForm
+                      matchId={match.id}
+                      teamChoice={selectedTeam === "A" ? 0 : 1}
+                      teamName={selectedTeam === "A" ? match.teamA.name : match.teamB.name}
+                      projectName={selectedTeam === "A" ? match.teamA.project.name : match.teamB.project.name}
+                      onSuccess={(sig) => {
+                        setTxSig(sig)
+                        setFunded(true)
+                      }}
+                    />
+                  )}
                 </div>
-              )
-            })}
+              </div>
+            )}
           </div>
         </>
-      )}
-
-      {/* =================== Fund form =================== */}
-      {!isResolved && !funded && selectedTeam && (
-        <div style={{ maxWidth: "420px", margin: "0 auto", background: "#0a0a0a", borderRadius: "14px", padding: "24px", boxShadow: "0 4px 24px rgba(0,0,0,0.3)", border: "2px solid #F0B90B" }}>
-          <div style={{ textAlign: "center", marginBottom: "16px" }}>
-            <div style={{ fontSize: "1.5rem", marginBottom: "4px" }}>
-              {selectedTeam === "A" ? match.teamA.flag : match.teamB.flag}
-            </div>
-            <div style={{ fontSize: "0.9rem", fontWeight: 800, color: "#FFFFFF", textTransform: "uppercase" }}>
-              Fund {selectedTeam === "A" ? match.teamA.project.name : match.teamB.project.name}
-            </div>
-          </div>
-          {!publicKey ? (
-            <div style={{ textAlign: "center" }}>
-              <div style={{ fontSize: "0.82rem", color: "#888", marginBottom: "16px" }}>
-                Connect your wallet to pledge SOL
-              </div>
-              <WalletMultiButton
-                style={{
-                  background: "#F0B90B",
-                  color: "#0a0a0a",
-                  fontWeight: 800,
-                  fontSize: "0.85rem",
-                  textTransform: "uppercase",
-                  borderRadius: "8px",
-                  padding: "14px 32px",
-                  border: "none",
-                  cursor: "pointer",
-                  width: "100%",
-                  justifyContent: "center",
-                }}
-              />
-            </div>
-          ) : (
-            <FundForm
-              matchId={match.id}
-              teamChoice={selectedTeam === "A" ? 0 : 1}
-              teamName={selectedTeam === "A" ? match.teamA.name : match.teamB.name}
-              projectName={selectedTeam === "A" ? match.teamA.project.name : match.teamB.project.name}
-              onSuccess={(sig) => {
-                setTxSig(sig)
-                setFunded(true)
-              }}
-            />
-          )}
-        </div>
       )}
 
       {/* =================== Success state =================== */}

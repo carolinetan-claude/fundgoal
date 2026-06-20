@@ -147,7 +147,7 @@ export function FundForm({ matchId, teamChoice, teamName, projectName, onSuccess
             Project: <span style={{ color: "#fff" }}>{projectName}</span>
           </div>
           <div>
-            <span style={{ color: "#F0B90B" }}>♥ {parseFloat(amount).toFixed(2)} SOL</span> goes to World Vision if {teamName} wins
+            <span style={{ color: "#F0B90B" }}>♥ {parseFloat(amount).toFixed(2)} SOL</span> funds {projectName} if {teamName} wins
           </div>
         </div>
       )}

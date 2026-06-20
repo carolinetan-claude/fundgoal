@@ -1,8 +1,11 @@
 import { Connection, PublicKey, LAMPORTS_PER_SOL } from "@solana/web3.js"
 
 export const NETWORK = "devnet"
-export const RPC_ENDPOINT = "https://api.devnet.solana.com"
-export const connection = new Connection(RPC_ENDPOINT, "confirmed")
+export const RPC_ENDPOINT = process.env.NEXT_PUBLIC_RPC_URL || "https://api.devnet.solana.com"
+export const connection = new Connection(RPC_ENDPOINT, {
+  commitment: "confirmed",
+  confirmTransactionInitialTimeout: 60000,
+})
 
 export const PROGRAM_ID = new PublicKey(
   process.env.NEXT_PUBLIC_PROGRAM_ID || "11111111111111111111111111111111"
