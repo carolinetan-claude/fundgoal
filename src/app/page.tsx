@@ -42,9 +42,9 @@ export default async function Home() {
             color: "#FFFFFF",
           }}
         >
-          EVERY GOAL BEGINS WITH A DREAM.
+          EVERY GOAL STARTS WITH A DREAM...
           <br />
-          <span style={{ color: "#F0B90B" }}>A DREAM YOU HAVE THE POWER TO FUND.</span>
+          <span style={{ color: "#F0B90B" }}>THAT YOU HAVE THE POWER TO FUND.</span>
         </h1>
         <p
           style={{
