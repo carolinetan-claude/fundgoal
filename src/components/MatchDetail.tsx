@@ -256,7 +256,7 @@ export function MatchDetail({ match, charityUrl }: { match: Match; charityUrl: s
               <div style={{ width: "380px", flexShrink: 0, position: "sticky" as const, top: "80px" }}>
                 <div style={{ background: "#0a0a0a", borderRadius: "14px", padding: "24px", boxShadow: "0 4px 24px rgba(0,0,0,0.3)", border: "2px solid #F0B90B" }}>
                   <div style={{ fontSize: "0.6rem", color: "#F0B90B", textTransform: "uppercase", letterSpacing: "0.12em", fontWeight: 700, marginBottom: "16px", textAlign: "center" }}>
-                    Fund this dream
+                    Back this dream
                   </div>
                   {!publicKey ? (
                     <div style={{ textAlign: "center" }}>
