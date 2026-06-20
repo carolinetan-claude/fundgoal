@@ -1,5 +1,6 @@
 import { MATCHES, CHARITY_NAME } from "@/lib/matches"
 import { MatchCard } from "@/components/MatchCard"
+import { CountryMarquee } from "@/components/CountryMarquee"
 
 export const dynamic = "force-dynamic"
 
@@ -67,6 +68,9 @@ export default async function Home() {
           .
         </p>
       </div>
+
+      {/* Country Marquee */}
+      <CountryMarquee />
 
       {/* How it works */}
       <div
