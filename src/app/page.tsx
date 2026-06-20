@@ -83,47 +83,47 @@ export default async function Home() {
         }}
       >
         {[
-          { step: "01", title: "PICK A MATCH", desc: "Choose from live World Cup matches" },
-          { step: "02", title: "BACK A TEAM", desc: "Your SOL backs a project in that country" },
-          { step: "03", title: "DREAM GETS FUNDED", desc: "100% goes to the winning project" },
+          { step: "01", title: "PICK A MATCH", desc: "Choose from live World Cup matches", accent: "#00BFA6" },
+          { step: "02", title: "BACK A TEAM", desc: "Your SOL backs a project in that country", accent: "#FFD600" },
+          { step: "03", title: "DREAM GETS FUNDED", desc: "100% goes to the winning project", accent: "#E91E63" },
         ].map((s) => (
           <div
             key={s.step}
             style={{
-              background: "linear-gradient(135deg, #F0B90B 0%, #D4A00A 100%)",
+              background: "#141414",
               borderRadius: "12px",
-              padding: "16px 20px",
+              padding: "24px 20px",
               flex: "1",
               minWidth: "200px",
               maxWidth: "280px",
-              boxShadow: "0 4px 20px rgba(240,185,11,0.3), 0 0 0 1px rgba(0,0,0,0.1)",
+              border: "1px solid rgba(255,255,255,0.12)",
+              borderTop: `3px solid ${s.accent}`,
             }}
           >
             <div
               style={{
-                fontSize: "0.65rem",
-                color: "rgba(0,0,0,0.5)",
-                fontWeight: 700,
-                textTransform: "uppercase",
-                letterSpacing: "0.1em",
-                marginBottom: "6px",
+                fontSize: "2rem",
+                fontWeight: 900,
+                color: s.accent,
+                lineHeight: 1,
+                marginBottom: "12px",
               }}
             >
-              Step {s.step}
+              {s.step}
             </div>
             <div
               style={{
                 fontSize: "0.9rem",
                 fontWeight: 800,
-                color: "#0a0a0a",
+                color: "#FFFFFF",
                 textTransform: "uppercase",
                 letterSpacing: "-0.01em",
-                marginBottom: "4px",
+                marginBottom: "6px",
               }}
             >
               {s.title}
             </div>
-            <div style={{ fontSize: "0.8rem", color: "rgba(0,0,0,0.55)" }}>{s.desc}</div>
+            <div style={{ fontSize: "0.8rem", color: "#888888" }}>{s.desc}</div>
           </div>
         ))}
       </div>

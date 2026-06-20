@@ -6,8 +6,6 @@ import { WalletMultiButton } from "@solana/wallet-adapter-react-ui"
 import { Match } from "@/lib/matches"
 import { solscanTxUrl } from "@/lib/solana"
 import { FundForm } from "./FundForm"
-import { PlayerSilhouette, isLightColor } from "./PlayerSilhouettes"
-
 export function MatchDetail({ match, charityUrl }: { match: Match; charityUrl: string }) {
   const { publicKey } = useWallet()
   const [selectedTeam, setSelectedTeam] = useState<"A" | "B" | null>(null)
@@ -16,11 +14,6 @@ export function MatchDetail({ match, charityUrl }: { match: Match; charityUrl: s
 
   const isResolved = match.status === "resolved"
   const winningTeam = match.winner === "A" ? match.teamA : match.winner === "B" ? match.teamB : null
-
-  const colorA = match.teamA.jerseyColor
-  const colorB = match.teamB.jerseyColor
-  const textA = isLightColor(colorA) ? "#0a0a0a" : "#FFFFFF"
-  const textB = isLightColor(colorB) ? "#0a0a0a" : "#FFFFFF"
 
   return (
     <div style={{ paddingTop: "32px", paddingBottom: "64px", maxWidth: "800px", margin: "0 auto" }}>
@@ -36,122 +29,42 @@ export function MatchDetail({ match, charityUrl }: { match: Match; charityUrl: s
           overflow: "hidden",
           marginBottom: "24px",
           boxShadow: "0 8px 40px rgba(0,0,0,0.5)",
-          border: "1px solid rgba(255,255,255,0.06)",
+          border: "2px solid #F0B90B",
         }}
       >
-        {/* PVP Arena — split diagonal (larger than card version) */}
-        <div style={{ position: "relative", height: "280px", overflow: "hidden" }}>
-          {/* Team A half — left */}
+        {/* White arena with large flags */}
+        <div
+          style={{
+            position: "relative",
+            height: "260px",
+            background: "#FFFFFF",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          {/* Team A — left */}
           <div
             style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              background: colorA,
-              clipPath: "polygon(0 0, 55% 0, 45% 100%, 0 100%)",
-            }}
-          />
-
-          {/* Team B half — right */}
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              background: colorB,
-              clipPath: "polygon(55% 0, 100% 0, 100% 100%, 45% 100%)",
-            }}
-          />
-
-          {/* Dark diagonal slash */}
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              background: "#0a0a0a",
-              clipPath: "polygon(48% 0, 52% 0, 48% 100%, 44% 100%)",
-              zIndex: 2,
-            }}
-          />
-
-          {/* Team A — left side */}
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "45%",
-              height: "100%",
+              flex: 1,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
-              zIndex: 3,
+              gap: "10px",
             }}
           >
-            <div style={{ opacity: 0.2, marginBottom: "6px" }}>
-              <PlayerSilhouette
-                position={match.teamA.position}
-                facing="right"
-                color={textA}
-                size={120}
-              />
-            </div>
-            <div style={{ fontSize: "2.5rem", marginBottom: "4px" }}>{match.teamA.flag}</div>
+            <div style={{ fontSize: "5.5rem", lineHeight: 1 }}>{match.teamA.flag}</div>
             <div
               style={{
                 fontSize: "1.1rem",
                 fontWeight: 900,
                 textTransform: "uppercase",
                 letterSpacing: "0.02em",
-                color: textA,
+                color: "#0a0a0a",
               }}
             >
               {match.teamA.name}
-            </div>
-          </div>
-
-          {/* Team B — right side */}
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              right: 0,
-              width: "45%",
-              height: "100%",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              zIndex: 3,
-            }}
-          >
-            <div style={{ opacity: 0.2, marginBottom: "6px" }}>
-              <PlayerSilhouette
-                position={match.teamB.position}
-                facing="left"
-                color={textB}
-                size={120}
-              />
-            </div>
-            <div style={{ fontSize: "2.5rem", marginBottom: "4px" }}>{match.teamB.flag}</div>
-            <div
-              style={{
-                fontSize: "1.1rem",
-                fontWeight: 900,
-                textTransform: "uppercase",
-                letterSpacing: "0.02em",
-                color: textB,
-              }}
-            >
-              {match.teamB.name}
             </div>
           </div>
 
@@ -159,10 +72,6 @@ export function MatchDetail({ match, charityUrl }: { match: Match; charityUrl: s
           <div
             className="vs-badge"
             style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
               zIndex: 10,
               background: "#F0B90B",
               color: "#0a0a0a",
@@ -175,10 +84,36 @@ export function MatchDetail({ match, charityUrl }: { match: Match; charityUrl: s
               alignItems: "center",
               justifyContent: "center",
               boxShadow: "0 0 30px rgba(240,185,11,0.5), 0 0 60px rgba(240,185,11,0.2)",
-              border: "3px solid rgba(0,0,0,0.2)",
+              border: "3px solid rgba(0,0,0,0.1)",
+              flexShrink: 0,
             }}
           >
             VS
+          </div>
+
+          {/* Team B — right */}
+          <div
+            style={{
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "10px",
+            }}
+          >
+            <div style={{ fontSize: "5.5rem", lineHeight: 1 }}>{match.teamB.flag}</div>
+            <div
+              style={{
+                fontSize: "1.1rem",
+                fontWeight: 900,
+                textTransform: "uppercase",
+                letterSpacing: "0.02em",
+                color: "#0a0a0a",
+              }}
+            >
+              {match.teamB.name}
+            </div>
           </div>
         </div>
 
