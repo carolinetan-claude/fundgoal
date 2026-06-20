@@ -176,11 +176,11 @@ export function FundForm({ matchId, teamChoice, teamName, projectName, onSuccess
           transition: "opacity 0.2s, background 0.2s",
         }}
       >
-        {loading ? "CONFIRMING..." : "FUND THIS DREAM"}
+        {loading ? "CONFIRMING..." : "BACK THIS DREAM"}
       </button>
 
       <div style={{ textAlign: "center", marginTop: "12px", fontSize: "0.72rem", color: "#444" }}>
-        Win or lose, a dream gets funded. No fees. Verified on Solana.
+        Either way, a dream gets funded. If your team loses, your SOL backs the winning team&apos;s project instead. No fees. Verified on Solana.
       </div>
     </div>
   )
