@@ -62,13 +62,24 @@ export function FundForm({ matchId, teamChoice, teamName, projectName, onSuccess
       }
 
       if (sig) {
-        await connection.confirmTransaction(sig, "confirmed")
+        try {
+          await connection.confirmTransaction(sig, "confirmed")
+        } catch (confirmErr: unknown) {
+          const msg = confirmErr instanceof Error ? confirmErr.message : ""
+          if (msg.includes("not confirmed") || msg.includes("timeout")) {
+            onSuccess(sig)
+            return
+          }
+          throw confirmErr
+        }
         onSuccess(sig)
       }
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Transaction failed"
       if (message.includes("429")) {
         setError("Solana network is busy. Please try again in a few seconds.")
+      } else if (message.includes("not confirmed") || message.includes("timeout")) {
+        setError("Transaction sent but confirmation is slow. Check Solscan in a moment — it likely went through.")
       } else {
         setError(message)
       }
