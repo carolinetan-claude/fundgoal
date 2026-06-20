@@ -1,0 +1,26 @@
+{
+  "ger-civ": {
+    "status": "upcoming",
+    "winner": null,
+    "totalSol": 0,
+    "solscanTx": null
+  },
+  "ecu-curacao": {
+    "status": "upcoming",
+    "winner": null,
+    "totalSol": 0,
+    "solscanTx": null
+  },
+  "tun-jpn": {
+    "status": "upcoming",
+    "winner": null,
+    "totalSol": 0,
+    "solscanTx": null
+  },
+  "uru-cpv": {
+    "status": "upcoming",
+    "winner": null,
+    "totalSol": 0,
+    "solscanTx": null
+  }
+}
