@@ -103,16 +103,7 @@ export default function RootLayout({
             }}
           >
             <div style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.4)" }}>
-              GoalFund · 100% of stakes fund real projects · World Vision via{" "}
-              <a
-                href="https://thegivingblock.com/donate/world-vision/"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ color: "#F0B90B", textDecoration: "underline" }}
-              >
-                The Giving Block
-              </a>{" "}
-              · EIN 95-1922279 · Built on Solana
+              GoalFund · 100% of stakes fund real projects · Built on Solana
             </div>
           </footer>
         </WalletProvider>
