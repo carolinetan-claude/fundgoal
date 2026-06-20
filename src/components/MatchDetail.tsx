@@ -22,7 +22,23 @@ export function MatchDetail({ match, charityUrl }: { match: Match; charityUrl: s
   return (
     <div style={{ paddingTop: "32px", paddingBottom: "64px", maxWidth: "1200px", margin: "0 auto" }}>
       {/* Back link */}
-      <a href="/" style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.85rem", textDecoration: "none", marginBottom: "20px", display: "inline-block" }}>
+      <a
+        href="/"
+        style={{
+          color: "#F0B90B",
+          fontSize: "0.82rem",
+          textDecoration: "none",
+          marginBottom: "20px",
+          display: "inline-flex",
+          alignItems: "center",
+          gap: "6px",
+          fontWeight: 600,
+          padding: "8px 16px",
+          background: "rgba(240,185,11,0.08)",
+          borderRadius: "8px",
+          border: "1px solid rgba(240,185,11,0.2)",
+        }}
+      >
         ← Back to matches
       </a>
 
@@ -33,7 +49,8 @@ export function MatchDetail({ match, charityUrl }: { match: Match; charityUrl: s
           borderRadius: "16px",
           padding: "20px 24px",
           marginBottom: "32px",
-          border: "1px solid rgba(255,255,255,0.08)",
+          border: "2px solid #F0B90B",
+          boxShadow: "0 4px 20px rgba(240,185,11,0.15)",
         }}
       >
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "20px", marginBottom: "16px" }}>
@@ -186,6 +203,31 @@ export function MatchDetail({ match, charityUrl }: { match: Match; charityUrl: s
                         </div>
                       </div>
 
+                      {/* Win/Lose consequences — only when selected */}
+                      {selectedTeam && (() => {
+                        const otherTeam = key === "A" ? match.teamB : match.teamA
+                        return (
+                          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
+                            <div style={{ background: "rgba(29,185,84,0.08)", borderRadius: "8px", padding: "10px", borderLeft: "3px solid #1DB954" }}>
+                              <div style={{ fontSize: "0.5rem", color: "#1DB954", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700, marginBottom: "4px" }}>
+                                ✓ If {team.name} wins
+                              </div>
+                              <div style={{ fontSize: "0.72rem", color: "#4a4a4a", lineHeight: 1.4 }}>
+                                Your SOL funds <strong>{p.name}</strong>
+                              </div>
+                            </div>
+                            <div style={{ background: "rgba(255,107,107,0.06)", borderRadius: "8px", padding: "10px", borderLeft: "3px solid #ff6b6b" }}>
+                              <div style={{ fontSize: "0.5rem", color: "#ff6b6b", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700, marginBottom: "4px" }}>
+                                ✗ If {team.name} loses
+                              </div>
+                              <div style={{ fontSize: "0.72rem", color: "#4a4a4a", lineHeight: 1.4 }}>
+                                Your SOL funds <strong>{otherTeam.project.name}</strong> instead
+                              </div>
+                            </div>
+                          </div>
+                        )
+                      })()}
+
                       {/* CTA — only when not selected */}
                       {!selectedTeam && (
                         <div
@@ -311,16 +353,6 @@ export function MatchDetail({ match, charityUrl }: { match: Match; charityUrl: s
         </div>
       )}
 
-      {/* =================== Bottom banner =================== */}
-      <div style={{ marginTop: "24px", padding: "16px 20px", background: "linear-gradient(135deg, #F0B90B 0%, #D4A00A 100%)", borderRadius: "12px", display: "flex", alignItems: "center", gap: "12px", boxShadow: "0 4px 20px rgba(240,185,11,0.3)" }}>
-        <span style={{ fontSize: "1.5rem" }}>🌍</span>
-        <div style={{ flex: 1 }}>
-          <div style={{ fontSize: "0.85rem", color: "#0a0a0a", fontWeight: 700 }}>100% of the pool funds a real charity project</div>
-          <div style={{ fontSize: "0.72rem", color: "rgba(0,0,0,0.55)" }}>
-            Verified on Solana · All donations are transparent and on-chain
-          </div>
-        </div>
-      </div>
     </div>
   )
 }
