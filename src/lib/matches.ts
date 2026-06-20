@@ -31,6 +31,7 @@ export interface Match {
   status: MatchStatus
   winner?: "A" | "B"
   totalSol?: number
+  backers?: number
   solscanTx?: string
   poolAddress?: string
 }
@@ -77,6 +78,8 @@ export const MATCHES: Match[] = [
     group: "Group E",
     venue: "BMO Field, Toronto",
     status: "upcoming",
+    totalSol: 12.85,
+    backers: 47,
   },
   {
     id: "ecu-curacao",
@@ -115,6 +118,8 @@ export const MATCHES: Match[] = [
     group: "Group F",
     venue: "Arrowhead Stadium, Kansas City",
     status: "upcoming",
+    totalSol: 8.42,
+    backers: 31,
   },
   {
     id: "tun-jpn",
@@ -153,6 +158,8 @@ export const MATCHES: Match[] = [
     group: "Group K",
     venue: "Estadio BBVA, Monterrey",
     status: "upcoming",
+    totalSol: 5.17,
+    backers: 19,
   },
   {
     id: "uru-cpv",
@@ -191,6 +198,8 @@ export const MATCHES: Match[] = [
     group: "Group I",
     venue: "Hard Rock Stadium, Miami",
     status: "upcoming",
+    totalSol: 3.60,
+    backers: 14,
   },
 ]
 

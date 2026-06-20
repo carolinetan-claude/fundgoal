@@ -64,6 +64,7 @@ function StatusBadge({ status }: { status: MatchStatus }) {
 
 export function MatchCard({ match }: { match: Match }) {
   const totalSol = match.totalSol || 0
+  const backers = match.backers || 0
   const isResolved = match.status === "resolved"
 
   return (
@@ -218,7 +219,7 @@ export function MatchCard({ match }: { match: Match }) {
             </div>
           </div>
 
-          {/* Pool + charity */}
+          {/* Pool + backers */}
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <div>
               <div style={{ fontSize: "0.6rem", color: "#444", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "2px" }}>
@@ -230,10 +231,10 @@ export function MatchCard({ match }: { match: Match }) {
             </div>
             <div style={{ textAlign: "right" }}>
               <div style={{ fontSize: "0.6rem", color: "#444", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "2px" }}>
-                World Vision
+                Backers
               </div>
-              <div style={{ fontFamily: "monospace", fontWeight: 700, color: isResolved ? "#1DB954" : "#F0B90B", fontSize: "0.9rem" }}>
-                {totalSol.toFixed(2)} SOL
+              <div style={{ fontFamily: "monospace", fontWeight: 700, color: "#FFFFFF", fontSize: "1.05rem" }}>
+                {backers}
               </div>
             </div>
           </div>

@@ -24,6 +24,7 @@ export default async function Home() {
     status: states[m.id]?.status || m.status,
     winner: states[m.id]?.winner || m.winner,
     totalSol: states[m.id]?.totalSol || m.totalSol || 0,
+    backers: states[m.id]?.backers || m.backers || 0,
     solscanTx: states[m.id]?.solscanTx || m.solscanTx,
   }))
 
@@ -83,39 +84,40 @@ export default async function Home() {
         }}
       >
         {[
-          { step: "01", title: "PICK A MATCH", desc: "Choose from live World Cup matches", accent: "#00BFA6" },
-          { step: "02", title: "BACK A TEAM", desc: "Your SOL backs a project in that country", accent: "#FFD600" },
-          { step: "03", title: "DREAM GETS FUNDED", desc: "100% goes to the winning project", accent: "#E91E63" },
+          { step: "01", title: "PICK A MATCH", desc: "Choose from live World Cup matches", accent: "#00BFA6", icon: "⚽" },
+          { step: "02", title: "BACK A TEAM", desc: "Your SOL backs a project in that country", accent: "#FFD600", icon: "🎯" },
+          { step: "03", title: "DREAM GETS FUNDED", desc: "100% goes to the winning project", accent: "#E91E63", icon: "🏆" },
         ].map((s) => (
           <div
             key={s.step}
             style={{
-              background: "#141414",
+              background: "#FDF6E3",
               borderRadius: "12px",
               padding: "24px 20px",
               flex: "1",
               minWidth: "200px",
               maxWidth: "280px",
-              border: "1px solid rgba(255,255,255,0.12)",
-              borderTop: `3px solid ${s.accent}`,
+              borderTop: `4px solid ${s.accent}`,
             }}
           >
-            <div
-              style={{
-                fontSize: "2rem",
-                fontWeight: 900,
-                color: s.accent,
-                lineHeight: 1,
-                marginBottom: "12px",
-              }}
-            >
-              {s.step}
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "12px" }}>
+              <div
+                style={{
+                  fontSize: "1.8rem",
+                  fontWeight: 900,
+                  color: s.accent,
+                  lineHeight: 1,
+                }}
+              >
+                {s.step}
+              </div>
+              <div style={{ fontSize: "1.8rem", lineHeight: 1 }}>{s.icon}</div>
             </div>
             <div
               style={{
                 fontSize: "0.9rem",
                 fontWeight: 800,
-                color: "#FFFFFF",
+                color: "#1a1a1a",
                 textTransform: "uppercase",
                 letterSpacing: "-0.01em",
                 marginBottom: "6px",
@@ -123,7 +125,7 @@ export default async function Home() {
             >
               {s.title}
             </div>
-            <div style={{ fontSize: "0.8rem", color: "#888888" }}>{s.desc}</div>
+            <div style={{ fontSize: "0.8rem", color: "#5a5a5a" }}>{s.desc}</div>
           </div>
         ))}
       </div>
