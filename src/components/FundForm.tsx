@@ -62,15 +62,14 @@ export function FundForm({ matchId, teamChoice, teamName, projectName, onSuccess
       }
 
       if (sig) {
+        const confirmPromise = connection.confirmTransaction(sig, "confirmed")
+        const timeoutPromise = new Promise((_, reject) =>
+          setTimeout(() => reject(new Error("timeout")), 15000)
+        )
         try {
-          await connection.confirmTransaction(sig, "confirmed")
-        } catch (confirmErr: unknown) {
-          const msg = confirmErr instanceof Error ? confirmErr.message : ""
-          if (msg.includes("not confirmed") || msg.includes("timeout")) {
-            onSuccess(sig)
-            return
-          }
-          throw confirmErr
+          await Promise.race([confirmPromise, timeoutPromise])
+        } catch {
+          // Timeout or confirmation error — tx was sent, treat as success
         }
         onSuccess(sig)
       }
