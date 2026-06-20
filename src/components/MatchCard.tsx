@@ -1,7 +1,31 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Match, MatchStatus } from "@/lib/matches"
+
+function useCountdown(kickoff: string) {
+  const [timeLeft, setTimeLeft] = useState(() => {
+    const diff = new Date(kickoff).getTime() - Date.now()
+    return Math.max(0, Math.floor(diff / 1000))
+  })
+
+  useEffect(() => {
+    if (timeLeft <= 0) return
+    const timer = setInterval(() => {
+      const diff = new Date(kickoff).getTime() - Date.now()
+      setTimeLeft(Math.max(0, Math.floor(diff / 1000)))
+    }, 1000)
+    return () => clearInterval(timer)
+  }, [kickoff, timeLeft])
+
+  const days = Math.floor(timeLeft / 86400)
+  const hours = Math.floor((timeLeft % 86400) / 3600)
+  const minutes = Math.floor((timeLeft % 3600) / 60)
+  const seconds = timeLeft % 60
+
+  return { days, hours, minutes, seconds, expired: timeLeft <= 0 }
+}
 
 function StatusBadge({ status }: { status: MatchStatus }) {
   if (status === "live") {
@@ -62,10 +86,35 @@ function StatusBadge({ status }: { status: MatchStatus }) {
   )
 }
 
+function CountdownUnit({ value, label }: { value: number; label: string }) {
+  return (
+    <div style={{ textAlign: "center", minWidth: "44px" }}>
+      <div
+        style={{
+          fontFamily: "monospace",
+          fontSize: "1.3rem",
+          fontWeight: 900,
+          color: "#FFFFFF",
+          background: "#1a1a1a",
+          borderRadius: "6px",
+          padding: "4px 8px",
+          lineHeight: 1.2,
+        }}
+      >
+        {String(value).padStart(2, "0")}
+      </div>
+      <div style={{ fontSize: "0.5rem", color: "#888", textTransform: "uppercase", letterSpacing: "0.1em", marginTop: "4px" }}>
+        {label}
+      </div>
+    </div>
+  )
+}
+
 export function MatchCard({ match }: { match: Match }) {
   const totalSol = match.totalSol || 0
   const backers = match.backers || 0
   const isResolved = match.status === "resolved"
+  const countdown = useCountdown(match.kickoff)
 
   return (
     <Link href={`/match/${match.id}`} style={{ textDecoration: "none" }}>
@@ -204,17 +253,54 @@ export function MatchCard({ match }: { match: Match }) {
             padding: "16px 18px",
             display: "flex",
             flexDirection: "column",
-            gap: "12px",
+            gap: "14px",
           }}
         >
+          {/* Countdown timer */}
+          {!isResolved && !countdown.expired && (
+            <div>
+              <div style={{ fontSize: "0.6rem", color: "#F0B90B", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700, marginBottom: "8px", textAlign: "center" }}>
+                ⏱ Funding closes at kickoff
+              </div>
+              <div style={{ display: "flex", justifyContent: "center", gap: "8px" }}>
+                {countdown.days > 0 && <CountdownUnit value={countdown.days} label="Days" />}
+                <CountdownUnit value={countdown.hours} label="Hrs" />
+                <CountdownUnit value={countdown.minutes} label="Min" />
+                <CountdownUnit value={countdown.seconds} label="Sec" />
+              </div>
+            </div>
+          )}
+
+          {/* Venue + time — prominent */}
+          <div
+            style={{
+              background: "#141414",
+              borderRadius: "8px",
+              padding: "10px 14px",
+              display: "flex",
+              alignItems: "center",
+              gap: "10px",
+            }}
+          >
+            <div style={{ fontSize: "1.2rem" }}>📍</div>
+            <div>
+              <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#FFFFFF" }}>
+                {match.venue}
+              </div>
+              <div style={{ fontSize: "0.72rem", color: "#F0B90B", fontWeight: 600 }}>
+                {match.kickoffDisplay}
+              </div>
+            </div>
+          </div>
+
           {/* Projects preview */}
-          <div style={{ background: "#141414", borderRadius: "8px", padding: "10px 12px", fontSize: "0.75rem", color: "#888" }}>
-            <div style={{ marginBottom: "4px" }}>
-              <span style={{ color: "#F0B90B" }}>{match.teamA.flag}</span>{" "}
+          <div style={{ background: "#141414", borderRadius: "8px", padding: "10px 12px", fontSize: "0.78rem" }}>
+            <div style={{ marginBottom: "4px", color: "#ccc" }}>
+              <span>{match.teamA.flag}</span>{" "}
               {match.teamA.project.name}
             </div>
-            <div>
-              <span style={{ color: "#F0B90B" }}>{match.teamB.flag}</span>{" "}
+            <div style={{ color: "#ccc" }}>
+              <span>{match.teamB.flag}</span>{" "}
               {match.teamB.project.name}
             </div>
           </div>
@@ -222,26 +308,21 @@ export function MatchCard({ match }: { match: Match }) {
           {/* Pool + backers */}
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <div>
-              <div style={{ fontSize: "0.6rem", color: "#444", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "2px" }}>
+              <div style={{ fontSize: "0.6rem", color: "#F0B90B", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "2px", fontWeight: 700 }}>
                 Pool
               </div>
-              <div style={{ fontFamily: "monospace", fontWeight: 700, color: isResolved ? "#1DB954" : "#F0B90B", fontSize: "1.05rem" }}>
-                {totalSol.toFixed(2)} SOL
+              <div style={{ fontFamily: "monospace", fontWeight: 700, color: "#FFFFFF", fontSize: "1.15rem" }}>
+                {totalSol.toFixed(2)} <span style={{ color: "#F0B90B" }}>SOL</span>
               </div>
             </div>
             <div style={{ textAlign: "right" }}>
-              <div style={{ fontSize: "0.6rem", color: "#444", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "2px" }}>
+              <div style={{ fontSize: "0.6rem", color: "#F0B90B", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "2px", fontWeight: 700 }}>
                 Backers
               </div>
-              <div style={{ fontFamily: "monospace", fontWeight: 700, color: "#FFFFFF", fontSize: "1.05rem" }}>
-                {backers}
+              <div style={{ fontFamily: "monospace", fontWeight: 700, color: "#FFFFFF", fontSize: "1.15rem" }}>
+                {backers} <span style={{ fontSize: "0.7rem", color: "#888" }}>people</span>
               </div>
             </div>
-          </div>
-
-          {/* Kickoff */}
-          <div style={{ fontSize: "0.72rem", color: "#555", borderTop: "1px solid #1a1a1a", paddingTop: "10px" }}>
-            {match.kickoffDisplay} · {match.venue}
           </div>
 
           {/* CTA */}
@@ -250,10 +331,10 @@ export function MatchCard({ match }: { match: Match }) {
               background: isResolved ? "#1DB954" : "#F0B90B",
               color: "#0a0a0a",
               fontWeight: 800,
-              fontSize: "0.82rem",
+              fontSize: "0.85rem",
               textTransform: "uppercase",
               letterSpacing: "0.05em",
-              padding: "12px",
+              padding: "14px",
               borderRadius: "8px",
               textAlign: "center",
             }}
