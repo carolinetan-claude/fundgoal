@@ -475,7 +475,7 @@ export function MatchDetail({ match, charityUrl }: { match: Match; charityUrl: s
             </a>
             <a
               href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                `I'm backing ${selectedTeam === "A" ? match.teamA.name : match.teamB.name} to fund ${selectedTeam === "A" ? match.teamA.project.name : match.teamB.project.name} during the World Cup 🌍⚽ #FundGoal`
+                `I'm backing ${selectedTeam === "A" ? match.teamA.name : match.teamB.name} to fund ${selectedTeam === "A" ? match.teamA.project.name : match.teamB.project.name} during the World Cup 🌍⚽ #GoalFund`
               )}`}
               target="_blank"
               rel="noopener noreferrer"

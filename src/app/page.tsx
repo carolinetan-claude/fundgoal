@@ -42,7 +42,7 @@ export default async function Home() {
             color: "#FFFFFF",
           }}
         >
-          EVERY GOAL STARTS WITH A <span className="shimmer-text">DREAM</span>
+          EVERY <span className="shimmer-text">GOAL</span> STARTS WITH A DREAM
           <br />
           THAT YOU HAVE THE POWER TO <span className="shimmer-text">FUND</span>.
         </h1>

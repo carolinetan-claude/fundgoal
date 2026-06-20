@@ -9,11 +9,11 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "FundGoal — Fund a Dream",
+  title: "GoalFund — Fund a Dream",
   description:
     "The World Cup is happening. Use prediction pools to fund real charity projects — 100% of stakes go to World Vision. Verified on Solana.",
   openGraph: {
-    title: "FundGoal — Fund a Dream",
+    title: "GoalFund — Fund a Dream",
     description:
       "Pick a team. Back a dream. 100% of your SOL funds a real project during the 2026 World Cup.",
     type: "website",
@@ -60,9 +60,13 @@ export default function RootLayout({
                 textTransform: "uppercase",
                 letterSpacing: "-0.01em",
                 textDecoration: "none",
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
               }}
             >
-              FUNDGOAL
+              <img src="/icon.svg" alt="" width={28} height={28} style={{ borderRadius: "6px" }} />
+              GOALFUND
             </a>
             <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
               <a
@@ -115,7 +119,7 @@ export default function RootLayout({
             }}
           >
             <div style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.4)" }}>
-              FundGoal · 100% of stakes fund real projects · World Vision via{" "}
+              GoalFund · 100% of stakes fund real projects · World Vision via{" "}
               <a
                 href="https://thegivingblock.com/donate/world-vision/"
                 target="_blank"

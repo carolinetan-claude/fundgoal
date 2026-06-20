@@ -55,8 +55,8 @@ export default async function ThanksPage({
   const losingTeam = winner === "A" ? match.teamB : winner === "B" ? match.teamA : null
 
   const shareText = isResolved && winningTeam
-    ? `${winningTeam.project.name} in ${winningTeam.project.country} just got funded with ${totalSol.toFixed(2)} SOL during the World Cup! Verified on Solana. #FundGoal`
-    : `I'm backing a dream during the World Cup with FundGoal. ${match.teamA.name} vs ${match.teamB.name} — 100% of SOL goes to a real project. #FundGoal`
+    ? `${winningTeam.project.name} in ${winningTeam.project.country} just got funded with ${totalSol.toFixed(2)} SOL during the World Cup! Verified on Solana. #GoalFund`
+    : `I'm backing a dream during the World Cup with GoalFund. ${match.teamA.name} vs ${match.teamB.name} — 100% of SOL goes to a real project. #GoalFund`
 
   const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`
 
@@ -189,16 +189,16 @@ export default async function ThanksPage({
         </div>
       </div>
 
-      {/* FundGoal attribution */}
+      {/* GoalFund attribution */}
       <div style={{ textAlign: "center", marginTop: "24px" }}>
         <div style={{ fontSize: "0.72rem", color: "#444" }}>
-          FundGoal · 100% of stakes fund real projects · World Vision via{" "}
+          GoalFund · 100% of stakes fund real projects · World Vision via{" "}
           <a href="https://thegivingblock.com/donate/world-vision/" target="_blank" rel="noopener noreferrer" style={{ color: "#F0B90B", textDecoration: "none" }}>
             The Giving Block
           </a>
         </div>
         <a href="/" style={{ fontSize: "0.82rem", color: "#888", textDecoration: "none", marginTop: "8px", display: "inline-block" }}>
-          ← Back to FundGoal
+          ← Back to GoalFund
         </a>
       </div>
     </div>
