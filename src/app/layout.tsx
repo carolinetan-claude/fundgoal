@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { Geist_Mono } from "next/font/google"
 import "./globals.css"
 import { WalletProvider } from "@/components/WalletProvider"
+import { WalletButton } from "@/components/WalletButton"
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -68,7 +69,7 @@ export default function RootLayout({
               <img src="/icon.svg" alt="" width={28} height={28} style={{ borderRadius: "6px" }} />
               DREAMFUND
             </a>
-            <div />
+            <WalletButton />
           </header>
 
           {/* Main — sits above the fixed background */}
