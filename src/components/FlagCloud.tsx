@@ -15,7 +15,7 @@ export function FlagCloud() {
   )
 
   return (
-    <div className="flex items-center justify-center py-6">
+    <div className="flex items-center justify-center py-0 -my-4">
       <IconCloud images={images} />
     </div>
   )

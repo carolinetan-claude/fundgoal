@@ -28,9 +28,9 @@ export default async function Home() {
   }))
 
   return (
-    <div style={{ paddingTop: "48px", paddingBottom: "64px" }}>
+    <div style={{ paddingTop: "32px", paddingBottom: "64px" }}>
       {/* Hero */}
-      <div style={{ textAlign: "center", marginBottom: "48px" }}>
+      <div style={{ textAlign: "center", marginBottom: "12px" }}>
         <h1
           style={{
             fontSize: "2.5rem",
