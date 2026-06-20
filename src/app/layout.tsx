@@ -9,11 +9,11 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "GoalFund — Fund a Dream",
+  title: "DreamFund — Fund a Dream",
   description:
     "The World Cup is happening. Use prediction pools to fund real charity projects — 100% of stakes go to World Vision. Verified on Solana.",
   openGraph: {
-    title: "GoalFund — Fund a Dream",
+    title: "DreamFund — Fund a Dream",
     description:
       "Pick a team. Back a dream. 100% of your SOL funds a real project during the 2026 World Cup.",
     type: "website",
@@ -66,7 +66,7 @@ export default function RootLayout({
               }}
             >
               <img src="/icon.svg" alt="" width={28} height={28} style={{ borderRadius: "6px" }} />
-              GOALFUND
+              DREAMFUND
             </a>
             <div />
           </header>
@@ -103,7 +103,7 @@ export default function RootLayout({
             }}
           >
             <div style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.4)" }}>
-              GoalFund · 100% of stakes fund real projects · Built on Solana
+              DreamFund · 100% of stakes fund real projects · Built on Solana
             </div>
           </footer>
         </WalletProvider>

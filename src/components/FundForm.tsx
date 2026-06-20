@@ -140,14 +140,11 @@ export function FundForm({ matchId, teamChoice, teamName, projectName, onSuccess
           fontSize: "0.82rem",
           color: "#888",
         }}>
-          <div style={{ marginBottom: "4px" }}>
-            Backing: <span style={{ color: "#fff", fontWeight: 700 }}>{teamName}</span>
-          </div>
-          <div style={{ marginBottom: "4px" }}>
-            Project: <span style={{ color: "#fff" }}>{projectName}</span>
+          <div style={{ marginBottom: "6px" }}>
+            <span style={{ color: "#1DB954" }}>✓</span> If <span style={{ color: "#fff", fontWeight: 700 }}>{teamName}</span> wins → <span style={{ color: "#F0B90B" }}>{parseFloat(amount).toFixed(2)} SOL</span> funds <span style={{ color: "#fff" }}>{projectName}</span>
           </div>
           <div>
-            <span style={{ color: "#F0B90B" }}>♥ {parseFloat(amount).toFixed(2)} SOL</span> funds {projectName} if {teamName} wins
+            <span style={{ color: "#ff6b6b" }}>✗</span> If they lose → your SOL funds the opposing team&apos;s project
           </div>
         </div>
       )}
@@ -179,11 +176,11 @@ export function FundForm({ matchId, teamChoice, teamName, projectName, onSuccess
           transition: "opacity 0.2s, background 0.2s",
         }}
       >
-        {loading ? "CONFIRMING..." : "FUND THIS MATCH"}
+        {loading ? "CONFIRMING..." : "FUND THIS DREAM"}
       </button>
 
       <div style={{ textAlign: "center", marginTop: "12px", fontSize: "0.72rem", color: "#444" }}>
-        100% of your SOL goes to the winning project. No fees. Verified on Solana.
+        Win or lose, a dream gets funded. No fees. Verified on Solana.
       </div>
     </div>
   )
