@@ -184,7 +184,7 @@ export function MatchDetail({ match, charityUrl }: { match: Match; charityUrl: s
             {(match.totalSol || 0).toFixed(2)} SOL → {winningTeam.project.country}
           </div>
           <div style={{ fontSize: "0.75rem", color: "#888" }}>
-            ♥ Donated to World Vision ·{" "}
+            ♥ Donated to charity ·{" "}
             {match.solscanTx && (
               <a href={solscanTxUrl(match.solscanTx)} target="_blank" rel="noopener noreferrer" style={{ color: "#F0B90B" }}>
                 View on Solscan →
@@ -194,175 +194,80 @@ export function MatchDetail({ match, charityUrl }: { match: Match; charityUrl: s
         </div>
       )}
 
-      {/* =================== Project selection with hero images =================== */}
+      {/* =================== Team selection =================== */}
       {!isResolved && !funded && (
         <>
-          <div style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 600, marginBottom: "16px", textAlign: "center" }}>
-            Which dream do you want to fund?
+          <div style={{ textAlign: "center", marginBottom: "20px" }}>
+            <div style={{ fontSize: "1.2rem", fontWeight: 900, textTransform: "uppercase", color: "#FFFFFF", marginBottom: "6px" }}>
+              BACK A TEAM, <span style={{ color: "#F0B90B" }}>FUND A DREAM</span>
+            </div>
+            <div style={{ fontSize: "0.82rem", color: "#888" }}>
+              Pick the team you believe in. If they win, 100% of the pool funds their project.
+            </div>
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "32px" }}>
-            {/* Team A project card */}
-            <div
-              onClick={() => setSelectedTeam("A")}
-              style={{
-                background: "#0a0a0a",
-                border: selectedTeam === "A" ? "3px solid #F0B90B" : "3px solid rgba(255,255,255,0.06)",
-                borderRadius: "16px",
-                overflow: "hidden",
-                cursor: "pointer",
-                transition: "border-color 0.2s, transform 0.2s",
-                boxShadow: selectedTeam === "A"
-                  ? "0 0 20px rgba(240,185,11,0.15)"
-                  : "0 4px 24px rgba(0,0,0,0.3)",
-              }}
-            >
-              {/* Hero image */}
-              <div style={{ position: "relative", height: "160px", overflow: "hidden" }}>
-                <img
-                  src={match.teamA.project.imageUrl}
-                  alt={match.teamA.project.name}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    display: "block",
-                  }}
-                />
-                {/* Dark gradient overlay at the bottom for text readability */}
+            {[
+              { key: "A" as const, team: match.teamA },
+              { key: "B" as const, team: match.teamB },
+            ].map(({ key, team }) => {
+              const isSelected = selectedTeam === key
+              return (
                 <div
+                  key={key}
+                  onClick={() => setSelectedTeam(key)}
                   style={{
-                    position: "absolute",
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    height: "60px",
-                    background: "linear-gradient(transparent, rgba(10,10,10,0.8))",
+                    background: isSelected ? "#141414" : "#0a0a0a",
+                    border: isSelected ? "3px solid #F0B90B" : "3px solid rgba(255,255,255,0.08)",
+                    borderRadius: "16px",
+                    cursor: "pointer",
+                    transition: "all 0.2s ease",
+                    boxShadow: isSelected ? "0 0 24px rgba(240,185,11,0.2)" : "0 4px 24px rgba(0,0,0,0.3)",
+                    padding: "24px 16px",
+                    textAlign: "center",
                   }}
-                />
-                {/* Selected overlay */}
-                {selectedTeam === "A" && (
-                  <div
-                    style={{
-                      position: "absolute",
-                      inset: 0,
-                      background: "rgba(240,185,11,0.15)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <span
-                      style={{
-                        background: "#F0B90B",
-                        color: "#0a0a0a",
-                        fontWeight: 800,
-                        fontSize: "0.7rem",
-                        textTransform: "uppercase",
-                        letterSpacing: "0.08em",
-                        padding: "6px 14px",
-                        borderRadius: "6px",
-                      }}
-                    >
-                      ✓ SELECTED
-                    </span>
+                >
+                  <div style={{ fontSize: "3.5rem", marginBottom: "8px", lineHeight: 1 }}>{team.flag}</div>
+                  <div style={{ fontSize: "1rem", fontWeight: 900, textTransform: "uppercase", color: "#FFFFFF", marginBottom: "12px" }}>
+                    {team.name}
                   </div>
-                )}
-              </div>
-              {/* Content */}
-              <div style={{ padding: "16px" }}>
-                <div style={{ fontSize: "1.5rem", marginBottom: "4px" }}>{match.teamA.flag}</div>
-                <div style={{ fontSize: "0.6rem", color: "#888", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "6px" }}>
-                  If {match.teamA.name} wins →
-                </div>
-                <div style={{ fontSize: "0.95rem", fontWeight: 700, color: "#fff", marginBottom: "8px" }}>
-                  {match.teamA.project.name}
-                </div>
-                <div style={{ fontSize: "0.78rem", color: "#888", lineHeight: 1.5 }}>
-                  {match.teamA.project.description}
-                </div>
-              </div>
-            </div>
 
-            {/* Team B project card */}
-            <div
-              onClick={() => setSelectedTeam("B")}
-              style={{
-                background: "#0a0a0a",
-                border: selectedTeam === "B" ? "3px solid #F0B90B" : "3px solid rgba(255,255,255,0.06)",
-                borderRadius: "16px",
-                overflow: "hidden",
-                cursor: "pointer",
-                transition: "border-color 0.2s, transform 0.2s",
-                boxShadow: selectedTeam === "B"
-                  ? "0 0 20px rgba(240,185,11,0.15)"
-                  : "0 4px 24px rgba(0,0,0,0.3)",
-              }}
-            >
-              {/* Hero image */}
-              <div style={{ position: "relative", height: "160px", overflow: "hidden" }}>
-                <img
-                  src={match.teamB.project.imageUrl}
-                  alt={match.teamB.project.name}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    display: "block",
-                  }}
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    height: "60px",
-                    background: "linear-gradient(transparent, rgba(10,10,10,0.8))",
-                  }}
-                />
-                {selectedTeam === "B" && (
                   <div
                     style={{
-                      position: "absolute",
-                      inset: 0,
-                      background: "rgba(240,185,11,0.15)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
+                      background: isSelected ? "rgba(240,185,11,0.1)" : "#141414",
+                      borderRadius: "10px",
+                      padding: "12px",
+                      marginBottom: "12px",
                     }}
                   >
-                    <span
-                      style={{
-                        background: "#F0B90B",
-                        color: "#0a0a0a",
-                        fontWeight: 800,
-                        fontSize: "0.7rem",
-                        textTransform: "uppercase",
-                        letterSpacing: "0.08em",
-                        padding: "6px 14px",
-                        borderRadius: "6px",
-                      }}
-                    >
-                      ✓ SELECTED
-                    </span>
+                    <div style={{ fontSize: "0.6rem", color: "#F0B90B", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700, marginBottom: "6px" }}>
+                      If they win, this gets funded →
+                    </div>
+                    <div style={{ fontSize: "0.9rem", fontWeight: 700, color: "#FFFFFF", marginBottom: "4px" }}>
+                      {team.project.name}
+                    </div>
+                    <div style={{ fontSize: "0.72rem", color: "#888", lineHeight: 1.5 }}>
+                      {team.project.description.slice(0, 120)}...
+                    </div>
                   </div>
-                )}
-              </div>
-              {/* Content */}
-              <div style={{ padding: "16px" }}>
-                <div style={{ fontSize: "1.5rem", marginBottom: "4px" }}>{match.teamB.flag}</div>
-                <div style={{ fontSize: "0.6rem", color: "#888", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "6px" }}>
-                  If {match.teamB.name} wins →
+
+                  <div
+                    style={{
+                      background: isSelected ? "#F0B90B" : "rgba(255,255,255,0.06)",
+                      color: isSelected ? "#0a0a0a" : "#888",
+                      fontWeight: 800,
+                      fontSize: "0.75rem",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.05em",
+                      padding: "10px",
+                      borderRadius: "8px",
+                    }}
+                  >
+                    {isSelected ? "✓ SELECTED" : `BACK ${team.name.toUpperCase()}`}
+                  </div>
                 </div>
-                <div style={{ fontSize: "0.95rem", fontWeight: 700, color: "#fff", marginBottom: "8px" }}>
-                  {match.teamB.project.name}
-                </div>
-                <div style={{ fontSize: "0.78rem", color: "#888", lineHeight: 1.5 }}>
-                  {match.teamB.project.description}
-                </div>
-              </div>
-            </div>
+              )
+            })}
           </div>
         </>
       )}
@@ -462,16 +367,12 @@ export function MatchDetail({ match, charityUrl }: { match: Match; charityUrl: s
       )}
 
       {/* =================== Charity info =================== */}
-      <div style={{ marginTop: "24px", padding: "16px 20px", background: "rgba(10,10,10,0.85)", borderRadius: "12px", display: "flex", alignItems: "center", gap: "12px", boxShadow: "0 4px 24px rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.06)" }}>
+      <div style={{ marginTop: "24px", padding: "16px 20px", background: "linear-gradient(135deg, #F0B90B 0%, #D4A00A 100%)", borderRadius: "12px", display: "flex", alignItems: "center", gap: "12px", boxShadow: "0 4px 20px rgba(240,185,11,0.3)" }}>
         <span style={{ fontSize: "1.5rem" }}>🌍</span>
         <div style={{ flex: 1 }}>
-          <div style={{ fontSize: "0.85rem", color: "#fff", fontWeight: 600 }}>100% goes to World Vision</div>
-          <div style={{ fontSize: "0.72rem", color: "#888" }}>
-            Verified via{" "}
-            <a href={charityUrl} target="_blank" rel="noopener noreferrer" style={{ color: "#F0B90B", textDecoration: "none" }}>
-              The Giving Block
-            </a>{" "}
-            · EIN 95-1922279
+          <div style={{ fontSize: "0.85rem", color: "#0a0a0a", fontWeight: 700 }}>100% of the pool funds a real charity project</div>
+          <div style={{ fontSize: "0.72rem", color: "rgba(0,0,0,0.55)" }}>
+            Verified on Solana · All donations are transparent and on-chain
           </div>
         </div>
       </div>
