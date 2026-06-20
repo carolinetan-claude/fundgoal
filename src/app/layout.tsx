@@ -68,23 +68,7 @@ export default function RootLayout({
               <img src="/icon.svg" alt="" width={28} height={28} style={{ borderRadius: "6px" }} />
               GOALFUND
             </a>
-            <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-              <a
-                href="https://thegivingblock.com/donate/world-vision/"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  fontSize: "0.72rem",
-                  color: "rgba(255,255,255,0.5)",
-                  textDecoration: "none",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "4px",
-                }}
-              >
-                <span style={{ color: "#F0B90B" }}>♥</span> World Vision
-              </a>
-            </div>
+            <div />
           </header>
 
           {/* Main — sits above the fixed background */}

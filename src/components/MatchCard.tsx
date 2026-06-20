@@ -88,6 +88,8 @@ function StatusBadge({ status }: { status: MatchStatus }) {
   )
 }
 
+const SOL_USD_PRICE = 178
+
 function CountdownUnit({ value, label }: { value: number; label: string }) {
   return (
     <div style={{ textAlign: "center", minWidth: "44px" }}>
@@ -96,8 +98,8 @@ function CountdownUnit({ value, label }: { value: number; label: string }) {
           fontFamily: "monospace",
           fontSize: "1.3rem",
           fontWeight: 900,
-          color: "#FFFFFF",
-          background: "#1a1a1a",
+          color: "#0a0a0a",
+          background: "#F0B90B",
           borderRadius: "6px",
           padding: "4px 8px",
           lineHeight: 1.2,
@@ -105,7 +107,7 @@ function CountdownUnit({ value, label }: { value: number; label: string }) {
       >
         {String(value).padStart(2, "0")}
       </div>
-      <div style={{ fontSize: "0.5rem", color: "#888", textTransform: "uppercase", letterSpacing: "0.1em", marginTop: "4px" }}>
+      <div style={{ fontSize: "0.5rem", color: "#F0B90B", textTransform: "uppercase", letterSpacing: "0.1em", marginTop: "4px", fontWeight: 700 }}>
         {label}
       </div>
     </div>
@@ -303,6 +305,9 @@ export function MatchCard({ match }: { match: Match }) {
               </div>
               <div style={{ fontFamily: "monospace", fontWeight: 900, color: "#FFFFFF", fontSize: "1.4rem" }}>
                 {totalSol.toFixed(2)} <span style={{ color: "#F0B90B" }}>SOL</span>
+              </div>
+              <div style={{ fontSize: "0.68rem", color: "#888", marginTop: "2px" }}>
+                (${Math.round(totalSol * SOL_USD_PRICE).toLocaleString()} USD)
               </div>
             </div>
             <div style={{ width: "1px", height: "36px", background: "#2a2a2a" }} />

@@ -6,6 +6,8 @@ import { WalletMultiButton } from "@solana/wallet-adapter-react-ui"
 import { Match } from "@/lib/matches"
 import { solscanTxUrl } from "@/lib/solana"
 import { FundForm } from "./FundForm"
+
+const SOL_USD_PRICE = 178
 export function MatchDetail({ match, charityUrl }: { match: Match; charityUrl: string }) {
   const { publicKey } = useWallet()
   const [selectedTeam, setSelectedTeam] = useState<"A" | "B" | null>(null)
@@ -150,6 +152,9 @@ export function MatchDetail({ match, charityUrl }: { match: Match; charityUrl: s
               </div>
               <div style={{ fontFamily: "monospace", fontWeight: 900, color: "#FFFFFF", fontSize: "1.5rem" }} className="countup">
                 {(match.totalSol || 0).toFixed(2)} <span style={{ color: "#F0B90B" }}>SOL</span>
+              </div>
+              <div style={{ fontSize: "0.72rem", color: "#888", marginTop: "2px" }}>
+                (${Math.round((match.totalSol || 0) * SOL_USD_PRICE).toLocaleString()} USD)
               </div>
             </div>
             <div style={{ width: "1px", height: "40px", background: "#2a2a2a" }} />
